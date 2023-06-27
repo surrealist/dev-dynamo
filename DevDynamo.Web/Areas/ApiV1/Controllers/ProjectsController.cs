@@ -43,8 +43,10 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
       var path = $"./WorkflowTemplates/{request.Template}.txt";
       if (!System.IO.File.Exists(path))
-      {
-        return BadRequest(new ProblemDetails { Title = $"Template {request.Template} not found" });
+            {
+                var items = db.Projects.Select(x => x.Name).ToArray();
+                string allTemplatesNname = string.Join(", ", items.Take(items.Length - 1)) + " and " + items.Last();
+                return BadRequest(new ProblemDetails { Title = $"Template {request.Template} not found.  All available {allTemplatesNname}." });
       }
 
       var workflow = System.IO.File.ReadAllText(path);
