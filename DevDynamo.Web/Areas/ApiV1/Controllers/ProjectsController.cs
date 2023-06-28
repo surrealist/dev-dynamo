@@ -44,9 +44,18 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
       var path = $"./WorkflowTemplates/{request.Template}.txt";
       if (!System.IO.File.Exists(path))
             {
-                var items = db.Projects.Select(x => x.Name).ToArray();
-                string allTemplatesNname = string.Join(", ", items.Take(items.Length - 1)) + " and " + items.Last();
-                return BadRequest(new ProblemDetails { Title = $"Template {request.Template} not found.  All available {allTemplatesNname}." });
+             //   var items = db.Projects.Select(x => x.Name).ToArray();
+
+                var folder = new DirectoryInfo(System.IO.Path.GetDirectoryName(path)).Name;
+              //  DirectoryInfo d = new DirectoryInfo("./WorkflowTemplates"); //Assuming Test is your Folder
+              //  string[] files = new DirectoryInfo().GetFiles(".txt").Select(o => o.Name).ToArray();
+                String[] fileNames=
+Directory.GetFiles(@"./WorkflowTemplates", "*.txt")
+.Select(fileName => Path.GetFileNameWithoutExtension(fileName))
+.ToArray();
+
+                string allTemplatesNname = (fileNames.Count() > 1) ? string.Join(", ", fileNames.Take(fileNames.Length - 1)) + " and " + fileNames.Last() : fileNames[0];
+                return BadRequest(new ProblemDetails { Title = $"Template {request.Template} not found.  All available template are {allTemplatesNname}." });
       }
 
       var workflow = System.IO.File.ReadAllText(path);
