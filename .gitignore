@@ -3,3 +3,4 @@ obj/
 .vs/
 .vscode/
 /DevDynamo.Web/appsettings.json
+*.txt
