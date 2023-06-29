@@ -2,4 +2,3 @@ bin/
 obj/
 .vs/
 .vscode/
-/DevDynamo.Web/appsettings.json

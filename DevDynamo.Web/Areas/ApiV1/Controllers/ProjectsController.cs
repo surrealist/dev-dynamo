@@ -44,10 +44,10 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
       var path = $"./WorkflowTemplates/{request.Template}.txt";
       if (!System.IO.File.Exists(path))
             {
-                var items = db.Projects.Select(x => x.Name).ToArray();
-                string allTemplatesNname = string.Join(", ", items.Take(items.Length - 1)) + " and " + items.Last();
-                return BadRequest(new ProblemDetails { Title = $"Template {request.Template} not found.  All available {allTemplatesNname}." });
-      }
+                String[] fileNames = Directory.GetFiles(@"./WorkflowTemplates", "*.txt").Select(fileName => Path.GetFileNameWithoutExtension(fileName)).ToArray();
+                string allTemplatesNname = (fileNames.Any()) ? string.Join(", ", fileNames.Take(fileNames.Length - 1)) + " and " + fileNames.Last() : fileNames[0];
+               return BadRequest(new ProblemDetails { Title = $"Template {request.Template} not found.  All available {allTemplatesNname}." });
+            }
 
       var workflow = System.IO.File.ReadAllText(path);
       p.LoadWorkflowTemplate(workflow);
