@@ -52,7 +52,7 @@ namespace DevDynamo.Web.Data.AppDbMigrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProjectId")
+                    b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
@@ -109,7 +109,9 @@ namespace DevDynamo.Web.Data.AppDbMigrations
                 {
                     b.HasOne("DevDynamo.Models.Project", null)
                         .WithMany("Tickets")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DevDynamo.Models.WorkflowStep", b =>
