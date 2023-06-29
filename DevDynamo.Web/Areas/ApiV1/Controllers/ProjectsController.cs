@@ -57,5 +57,27 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
       return CreatedAtAction(nameof(GetById), new { id = p.Id }, res);
     }
 
-  }
+
+        [HttpPut("{id}")]
+        public ActionResult<ProjectReponse> CreateUpdate(Guid id, CreateProjectRequestUpdate request)
+        {
+            if (string.IsNullOrEmpty(request.Name) && string.IsNullOrEmpty(request.Description))
+            {
+                return BadRequest(new CreateProjectRequestUpdate { Name = $"{request.Name} " });
+            }
+
+            var _checkData = db.Projects.SingleOrDefault(x => x.Id == id);
+
+            if (_checkData != null)
+            {
+                _checkData.Name = request.Name;
+                _checkData.Description = request.Description;
+
+                db.SaveChanges();
+            }
+
+            return NoContent();
+        }
+
+    }
 }
