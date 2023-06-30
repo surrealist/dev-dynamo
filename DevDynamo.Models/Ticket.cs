@@ -20,5 +20,6 @@ namespace DevDynamo.Models
 
     [StringLength(50)]
     public string Status { get; set; } = null!;
-  }
+    public Guid ProjectId { get; set; }
+    }
 }

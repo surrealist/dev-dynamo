@@ -16,6 +16,7 @@ namespace DevDynamo.Models
     [StringLength(50)]
     public string ToStatus { get; set; } = null!;
     [StringLength(50)]
-    public string Action { get; set; } = null!;
-  }
+    public string Action { get; set; } = null!;    
+    public Guid ProjectId { get; set; }
+    }
 }
