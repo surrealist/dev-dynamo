@@ -59,22 +59,20 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
 
         [HttpPut("{id}")]
-        public ActionResult<ProjectReponse> CreateUpdate(Guid id, CreateProjectRequestUpdate request)
+        public ActionResult<ProjectReponse> Update(Guid id, UpdateProjectRequest request)
         {
-            if (string.IsNullOrEmpty(request.Name) && string.IsNullOrEmpty(request.Description))
-            {
-                return BadRequest(new CreateProjectRequestUpdate { Name = $"{request.Name} " });
-            }
 
-            var _checkData = db.Projects.SingleOrDefault(x => x.Id == id);
+            if (string.IsNullOrEmpty(request.Name)) return BadRequest(BadRequest(new UpdateProjectRequest { Name = $"cannot null or empty" }));                    
+            if (string.IsNullOrEmpty(request.Description)) return BadRequest(BadRequest(new UpdateProjectRequest { Description = $"cannot null or empty" }));
+            
+            var checkData = db.Projects.SingleOrDefault(x => x.Id == id);
 
-            if (_checkData != null)
-            {
-                _checkData.Name = request.Name;
-                _checkData.Description = request.Description;
+            if (checkData == null) return BadRequest(BadRequest(new UpdateProjectRequest { Description = $"cannot find Id => {id} " }));
 
-                db.SaveChanges();
-            }
+            checkData.Name = request.Name;
+            checkData.Description = request.Description;
+
+            db.SaveChanges();
 
             return NoContent();
         }

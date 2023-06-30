@@ -12,7 +12,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Models
 
     }
 
-    public class CreateProjectRequestUpdate
+    public class UpdateProjectRequest
     {
 
         [StringLength(100)]
