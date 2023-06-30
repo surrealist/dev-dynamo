@@ -3,18 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DevDynamo.Web.Areas.ApiV1.Models
 {
-  public class TicketResponse
+  public class ProjectResponse
   {
-    public int Id { get; set; }
-    public string? Title { get; set; }
+    public Guid Id { get; set; }
+    public string? Name { get; set; }
     public string? Description { get; set; }
 
-    public static TicketResponse FromModel(Ticket p)
+    public static ProjectResponse FromModel(Project p)
     {
-      return new TicketResponse
+      return new ProjectResponse
       {
         Id = p.Id,
-        Title = p.Title,
+        Name = p.Name,
         Description = p.Description
       };
     }
