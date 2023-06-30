@@ -29,7 +29,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
                 return NotFound(new ProblemDetails() { Title = "Ticket is not found" });
             }
 
-            var workFlowsSteps = db.WorkflowSteps.Where(x => x.ProjectId == ticket.ProjectId && x.ToStatus == ticket.Status).
+            var workFlowsSteps = db.WorkflowSteps.Where(x => x.ProjectId == ticket.ProjectId && x.FromStatus == ticket.Status).
                                  Select(x => new TicketNextStatusResponse { ToStatus = x.ToStatus, Action = x.Action }).ToList();
 
             if (!workFlowsSteps.Any())
