@@ -30,12 +30,12 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
                    return NotFound(new ProblemDetails() { Title = $"Ticket with Id = {ticket_id} not found" });
                 }
 
-                var ItemNextSteps = db.WorkflowSteps.Where(x => x.ProjectId == item.ProjectId && x.ToStatus == item.Status).
+                var ItemNextSteps = db.WorkflowSteps.Where(x => x.ProjectId.ToString() == item.ProjectId.ToString() && x.FromStatus == item.Status).
                               Select(x => new TicketStatusResponse { ToStatus = x.ToStatus, Action = x.Action }).ToList();
 
                 if (!ItemNextSteps.Any())
                 {
-                    return NotFound(new ProblemDetails() { Title = $"Project Id= {ticket_id} , ToStatus = {item.Status} not found" });
+                    return NotFound(new ProblemDetails() { Title = $"Project Id= {item.ProjectId} , ToStatus = {item.Status} not found" });
 
                 } else if (ItemNextSteps.FirstOrDefault().ToStatus != target_status_name) {
 
@@ -48,12 +48,12 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
                 db.Tickets.Update(item);
                 db.SaveChanges();
 
-                var res = TicketResponse.FromModel(item);
-                return res;
+                //var res = TicketResponse.FromModel(item);
+                return NoContent( );
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return NotFound(new ProblemDetails() { Title = "Error updating data" });
+                return NotFound(new ProblemDetails() { Title = "Error updating data" + ex .Message()});
             }
            
 
