@@ -3,6 +3,7 @@ using DevDynamo.Web.Areas.ApiV1.Models;
 using DevDynamo.Web.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Sockets;
+using static DevDynamo.Web.Areas.ApiV1.Models.TicketResponse;
 
 namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
@@ -29,13 +30,22 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
                    return NotFound(new ProblemDetails() { Title = $"Ticket with Id = {ticket_id} not found" });
                 }
 
+                var ItemNextSteps = db.WorkflowSteps.Where(x => x.ProjectId == item.ProjectId && x.ToStatus == item.Status).
+                              Select(x => new TicketStatusResponse { ToStatus = x.ToStatus, Action = x.Action }).ToList();
 
+                if (!ItemNextSteps.Any())
+                {
+                    return NotFound(new ProblemDetails() { Title = $"Project Id= {ticket_id} , ToStatus = {item.Status} not found" });
 
-                var t = new Ticket();
-                t = item;
-                t.Status = target_status_name;
+                } else if (ItemNextSteps.FirstOrDefault().ToStatus != target_status_name) {
 
-                db.Tickets.Update(t);
+                    return NotFound(new ProblemDetails() { Title = $"Status {target_status_name} incorrect" });
+
+                }
+
+                item.Status = target_status_name;
+
+                db.Tickets.Update(item);
                 db.SaveChanges();
 
                 var res = TicketResponse.FromModel(item);
