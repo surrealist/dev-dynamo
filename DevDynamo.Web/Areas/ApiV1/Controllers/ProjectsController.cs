@@ -8,7 +8,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
   [Route("api/v1/[controller]")]
   [ApiController]
-  public class ProjectsController : ControllerBase
+  public class ProjectsController : AppControllerBase
   {
     private readonly AppDb db;
 

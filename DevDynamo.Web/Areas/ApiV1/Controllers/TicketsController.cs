@@ -8,7 +8,7 @@ using static DevDynamo.Web.Areas.ApiV1.Models.TicketResponse;
 namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
     [Route("api/v1/[controller]")]
-    public class TicketsController : ControllerBase
+    public class TicketsController : AppControllerBase
     {
         private readonly AppDb db;
         public TicketsController(AppDb db)
@@ -24,7 +24,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             {
                 if (target_status_name == "") throw new InvalidOperationException("Status not found.");
 
-                var item = db.Tickets.SingleOrDefault(x => x.Id == ticket_id);
+                var item = db.Tickets.Find(ticket_id);
                 if (item is null)
                 {
                    return NotFound(new ProblemDetails() { Title = $"Ticket with Id = {ticket_id} not found" });
@@ -40,7 +40,6 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
                 } else if (ItemNextSteps.FirstOrDefault().ToStatus != target_status_name) {
 
                     return NotFound(new ProblemDetails() { Title = $"Status {target_status_name} incorrect" });
-
                 }
 
                 item.Status = target_status_name;
