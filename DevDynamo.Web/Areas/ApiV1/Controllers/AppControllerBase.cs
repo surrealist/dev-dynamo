@@ -5,9 +5,10 @@ using System.Net;
 
 namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
-
+    
     public abstract class AppControllerBase : ControllerBase
     {
+        [ApiExplorerSettings(IgnoreApi = true)]
         public NotFoundObjectResult AppNotFound(string objectName, object? keyThatNotFound = null, string message = "")
         {
             //  var ss = keyThatNotFound != null ? $" [{keyThatNotFound}] " : " ";
