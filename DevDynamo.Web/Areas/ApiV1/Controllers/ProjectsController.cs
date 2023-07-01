@@ -24,6 +24,13 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             return items.ConvertAll(x => ProjectResponse.FromModel(x));
         }
 
+        [HttpGet("{project_id}/tickets")]
+
+        public ActionResult<IEnumerable<TicketResponse>> GetTicketsByProject(Guid project_id)
+        {
+            var items = db.Tickets.Where(x=>x.ProjectId == project_id).ToList();
+            return items.ConvertAll(x => TicketResponse.FromModel(x));
+        }
         [HttpGet("{id}")]
         public ActionResult<ProjectResponse> GetById(Guid id)
         {
