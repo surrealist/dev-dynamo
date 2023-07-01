@@ -1,0 +1,37 @@
+name: Run .NET Tool
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GH_PAT }}
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '2.1'  # Update this to your project's .NET version
+
+    - name: Install .NET tool command
+      run: dotnet tool install -g dotnet-ver
+    
+    - name: Bump version
+      run: dotnet ver
+
+    - name: Commit and push if changes
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git diff
+        if [[ $(git diff --quiet; echo $?) == 1 ]] && [[ $(git log -1 --pretty=%B) != 'Bump version' ]]; then
+          git commit -am 'Bump version'
+          git push
+        fi
