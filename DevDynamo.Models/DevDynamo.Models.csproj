@@ -5,11 +5,11 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <DocumentationFile></DocumentationFile>
-    <Version>0.1.7</Version>
-    <FileVersion>0.1.7</FileVersion>
-    <AssemblyVersion>0.1.7</AssemblyVersion>
-    <PackageVersion>0.1.7</PackageVersion>
-    <InformationVersion>0.1.7</InformationVersion>
+    <Version>0.1.8</Version>
+    <FileVersion>0.1.8</FileVersion>
+    <AssemblyVersion>0.1.8</AssemblyVersion>
+    <PackageVersion>0.1.8</PackageVersion>
+    <InformationVersion>0.1.8</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Update="WorkflowTemplates\Default.txt">
