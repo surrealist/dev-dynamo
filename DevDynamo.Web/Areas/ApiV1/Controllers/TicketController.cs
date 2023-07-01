@@ -26,7 +26,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             var ticket = db.Tickets.FirstOrDefault(x => x.Id == ticket_id);
             if (ticket == null)
             {
-                return NotFound(new ProblemDetails() { Title = "Ticket is not found" });
+                return AppNotFound($"Ticket is not found");
             }
 
             var workFlowsSteps = db.WorkflowSteps.Where(x => x.ProjectId == ticket.ProjectId && x.FromStatus == ticket.Status).
@@ -34,7 +34,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
             if (!workFlowsSteps.Any())
             {
-                return NotFound(new ProblemDetails() { Title = $"Workflow step not found" });
+                return AppNotFound($"Workflow step not found");
             }
 
             return workFlowsSteps;
