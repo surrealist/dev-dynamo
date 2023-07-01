@@ -4,16 +4,15 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-DevDynamo.Web-6f49e707-94ff-49b6-a5c3-d1de04fd910b</UserSecretsId>
-    <Version>0.1.18</Version>
-    <FileVersion>0.1.18</FileVersion>
-    <AssemblyVersion>0.1.18</AssemblyVersion>
-    <PackageVersion>0.1.18</PackageVersion>
-    <InformationVersion>0.1.18</InformationVersion>
+    <Version>0.1.19</Version>
+    <FileVersion>0.1.19</FileVersion>
+    <AssemblyVersion>0.1.19</AssemblyVersion>
+    <PackageVersion>0.1.19</PackageVersion>
+    <InformationVersion>0.1.19</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Areas\ApiV1\Models\ProjectReponse.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
