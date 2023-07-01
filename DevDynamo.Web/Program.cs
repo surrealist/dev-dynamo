@@ -22,6 +22,11 @@ namespace DevDynamo.Web
       {
         options.UseSqlServer(builder.Configuration.GetConnectionString("AppDb"));
       });
+      builder.Services.AddDbContext<AppDb>(options =>
+      {
+        options.UseLazyLoadingProxies()
+        .UseSqlServer(builder.Configuration.GetConnectionString("AppDb"));
+      });
 
       builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
