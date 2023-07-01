@@ -4,11 +4,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-DevDynamo.Web-6f49e707-94ff-49b6-a5c3-d1de04fd910b</UserSecretsId>
-    <Version>0.1.15</Version>
-    <FileVersion>0.1.15</FileVersion>
-    <AssemblyVersion>0.1.15</AssemblyVersion>
-    <PackageVersion>0.1.15</PackageVersion>
-    <InformationVersion>0.1.15</InformationVersion>
+    <Version>0.1.16</Version>
+    <FileVersion>0.1.16</FileVersion>
+    <AssemblyVersion>0.1.16</AssemblyVersion>
+    <PackageVersion>0.1.16</PackageVersion>
+    <InformationVersion>0.1.16</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.16" />
