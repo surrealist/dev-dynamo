@@ -8,7 +8,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
   [Route("api/v1/[controller]")]
   [ApiController]
-  public class ProjectsController : ControllerBase
+  public class ProjectsController : AppControllerBase
   {
     private readonly AppDb db;
 
@@ -30,8 +30,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
       var item = db.Projects.SingleOrDefault(x => x.Id == id);
       if (item is null)
       {
-        //return NotFound("Project not found");
-        return NotFound(new ProblemDetails() { Title = "Project is not found" });
+        return AppNotFound(nameof(Project));
       }
       return ProjectResponse.FromModel(item);
     }

@@ -11,7 +11,7 @@ using System.Net.Sockets;
 
 namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
-    public class TicketController : Controller
+    public class TicketController : AppControllerBase
     {
         private readonly AppDb db;
 

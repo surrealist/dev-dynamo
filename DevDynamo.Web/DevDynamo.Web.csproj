@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\ApiV1\Data\**" />
+    <Compile Remove="Areas\ApiV1\Views\**" />
+    <Content Remove="Areas\ApiV1\Data\**" />
+    <Content Remove="Areas\ApiV1\Views\**" />
+    <EmbeddedResource Remove="Areas\ApiV1\Data\**" />
+    <EmbeddedResource Remove="Areas\ApiV1\Views\**" />
+    <None Remove="Areas\ApiV1\Data\**" />
+    <None Remove="Areas\ApiV1\Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
@@ -25,11 +36,6 @@
     <None Update="WorkflowTemplates\Default.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\ApiV1\Data\" />
-    <Folder Include="Areas\ApiV1\Views\" />
   </ItemGroup>
 
 </Project>
