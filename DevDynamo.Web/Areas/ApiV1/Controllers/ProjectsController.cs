@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
-    public class ProjectsController : AppControllerBase
-    {
-        private readonly AppDb db;
+  [Route("api/v1/[controller]")]
+  [ApiController]
+  public class ProjectsController : AppControllerBase
+  {
+    private readonly AppDb db;
 
         public ProjectsController(AppDb db)
         {
@@ -62,6 +62,26 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
             var res = ProjectResponse.FromModel(p);
             return CreatedAtAction(nameof(GetById), new { id = p.Id }, res);
+        }
+
+
+        [HttpPut("{id}")]
+        public ActionResult<ProjectResponse> Update(Guid id, UpdateProjectRequest request)
+        {
+
+            if (string.IsNullOrEmpty(request.Name)) return BadRequest(new UpdateProjectRequest { Name = $"cannot null or empty" });                    
+            if (string.IsNullOrEmpty(request.Description)) return BadRequest(new UpdateProjectRequest { Description = $"cannot null or empty" });
+            
+            var checkData = db.Projects.SingleOrDefault(x => x.Id == id);
+
+            if (checkData == null) return BadRequest(new UpdateProjectRequest { Description = $"cannot find Id => {id} " });
+
+            checkData.Name = request.Name;
+            checkData.Description = request.Description;
+
+            db.SaveChanges();
+
+            return NoContent();
         }
 
     }
