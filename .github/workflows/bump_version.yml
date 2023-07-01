@@ -39,7 +39,7 @@ jobs:
     - name: Bump version
       id: bump
       run: |
-        echo "NEW_VERSION=$(dotnet ver)" >> $GITHUB_ENV
+        echo "NEW_VERSION=$(dotnet ver --plain)" >> $GITHUB_ENV
 
     - name: Commit and push if changes
       run: |
