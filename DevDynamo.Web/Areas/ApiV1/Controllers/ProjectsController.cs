@@ -48,8 +48,10 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
                 string allTemplatesNname = (fileNames.Any()) ? string.Join(", ", fileNames.Take(fileNames.Length - 1)) + " and " + fileNames.Last() : fileNames[0];
 
+
+                string messageError = $"Template {request.Template} not found.  All available template are {allTemplatesNname}.";
                 //(new ProblemDetails { Title = $"Template {request.Template} not found.  All available template are {allTemplatesNname}." });
-                return AppNotFound(nameof(Project), allTemplatesNname);
+                return AppNotFound(nameof(Project), message: messageError);
             }
 
             var workflow = System.IO.File.ReadAllText(path);
