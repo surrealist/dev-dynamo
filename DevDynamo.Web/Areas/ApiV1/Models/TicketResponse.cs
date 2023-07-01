@@ -6,17 +6,19 @@ namespace DevDynamo.Web.Areas.ApiV1.Models
     public class TicketResponse
     {
         public int Id { get; set; }
+        public string Title { get; set; } = null!;
         [StringLength(100)] public string Title { get; set; }
         public string? Description { get; set; }
-        [StringLength(50)] public string Status { get; set; } = null!;
-        public static TicketResponse FromModel(Ticket T)
+        public string Status { get; set; } = null!;
+
+        public static TicketResponse FromModel(Ticket t)
         {
             return new TicketResponse
             {
-                Id = T.Id,
-                Title = T.Title,
-                Description = T.Description,
-                Status = T.Status
+                Id = t.Id,
+                Title = t.Title,
+                Status = t.Status,
+                Description = t.Description
             };
 
         }
