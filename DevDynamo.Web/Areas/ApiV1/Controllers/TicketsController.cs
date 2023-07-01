@@ -35,11 +35,10 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
                 if (!ItemNextSteps.Any())
                 {
-                    return NotFound(new ProblemDetails() { Title = $"Project Id= {item.ProjectId} , ToStatus = {item.Status} not found" });
+                    return AppNotFound(nameof(Ticket), target_status_name);
 
-                } else if (ItemNextSteps.FirstOrDefault().ToStatus != target_status_name) {
-
-                    return NotFound(new ProblemDetails() { Title = $"Status {target_status_name} incorrect" });
+                } else if (ItemNextSteps.Where(x => x.ToStatus == target_status_name).Count() == 0) {
+                    return AppNotFound(nameof(Ticket), target_status_name);
                 }
 
                 item.Status = target_status_name;
