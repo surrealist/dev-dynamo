@@ -5,11 +5,11 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <Version>0.1.1</Version>
-    <FileVersion>0.1.1</FileVersion>
-    <AssemblyVersion>0.1.1</AssemblyVersion>
-    <PackageVersion>0.1.1</PackageVersion>
-    <InformationVersion>0.1.1</InformationVersion>
+    <Version>0.1.15</Version>
+    <FileVersion>0.1.15</FileVersion>
+    <AssemblyVersion>0.1.15</AssemblyVersion>
+    <PackageVersion>0.1.15</PackageVersion>
+    <InformationVersion>0.1.15</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
