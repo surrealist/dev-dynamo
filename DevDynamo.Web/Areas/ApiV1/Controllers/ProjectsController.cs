@@ -55,6 +55,8 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             var workflow = System.IO.File.ReadAllText(path);
             p.LoadWorkflowTemplate(workflow);
 
+            p.TemplateName = request.Template;
+
             db.Projects.Add(p);
             db.SaveChanges();
 
