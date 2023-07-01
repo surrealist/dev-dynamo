@@ -53,7 +53,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             }
             catch (Exception ex)
             {
-                return NotFound(new ProblemDetails() { Title = "Error updating data" + ex .Message});
+                return BadRequest(new ProblemDetails() { Title = "Error updating data" + ex .Message});
             }
            
 
