@@ -33,6 +33,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             {
                 return AppNotFound(nameof(Ticket), id);
             }
+            
             return TicketResponse.FromModel(item);
         }
 
@@ -54,10 +55,29 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
             var t = new Ticket(request.Title, workflow.ToStatus);
             project.Tickets.Add(t);
+            
             db.SaveChanges();
 
             var res = TicketResponse.FromModel(t);
             return CreatedAtAction(nameof(GetById), new { id = t.Id }, res);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<TicketResponse> UpdateInfo(int id, UpdateTicketRequest request)
+        {
+            var ticket = db.Tickets.SingleOrDefault(x => x.Id == id);
+            if (ticket is null)
+            {
+                return AppNotFound(nameof(Ticket), id);
+            }
+
+            ticket.Title = request.Title;
+            ticket.Description = request.Description;
+
+            db.Tickets.Update(ticket);
+            db.SaveChanges();
+
+            return NoContent();
         }
     }
 }
