@@ -68,7 +68,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
 
         [HttpPut("{id}")]
-        public ActionResult<ProjectReponse> Update(Guid id, UpdateProjectRequest request)
+        public ActionResult<ProjectResponse> Update(Guid id, UpdateProjectRequest request)
         {
 
             if (string.IsNullOrEmpty(request.Name)) return BadRequest(new UpdateProjectRequest { Name = $"cannot null or empty" });                    

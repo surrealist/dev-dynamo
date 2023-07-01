@@ -1,5 +1,4 @@
-﻿
-using DevDynamo.Models;
+﻿using DevDynamo.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace DevDynamo.Web.Areas.ApiV1.Models
