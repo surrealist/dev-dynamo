@@ -79,5 +79,25 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("{ticket_id}/next-status")]
+        public ActionResult<List<TicketNextStatusResponse>> GetAvailableNextTicketStatus(int ticket_id)
+        {
+            var ticket = db.Tickets.FirstOrDefault(x => x.Id == ticket_id);
+            if (ticket == null)
+            {
+                return AppNotFound($"Ticket is not found");
+            }
+
+            var workFlowsSteps = db.WorkflowSteps.Where(x => x.ProjectId == ticket.ProjectId && x.FromStatus == ticket.Status).
+                                 Select(x => new TicketNextStatusResponse { ToStatus = x.ToStatus, Action = x.Action }).ToList();
+
+            if (!workFlowsSteps.Any())
+            {
+                return AppNotFound($"Workflow step not found");
+            }
+
+            return workFlowsSteps;
+        }
     }
 }
