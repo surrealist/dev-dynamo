@@ -11,6 +11,10 @@
     <InformationVersion>0.1.18</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Areas\ApiV1\Models\ProjectReponse.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
