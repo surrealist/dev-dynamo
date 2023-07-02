@@ -1,0 +1,53 @@
+name: Run .NET Tool
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+      
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      last_commit_message: ${{ steps.check.outputs.last_commit_message }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GH_PAT }}
+
+    - name: Get last commit message
+      id: check
+      run: |
+        echo "::set-output name=last_commit_message::$(git log -1 --pretty=%B)"
+
+  build:
+    needs: check
+    if: ${{ !startsWith(needs.check.outputs.last_commit_message, 'Bump version to ') }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GH_PAT }}
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0'
+
+    - name: Install .NET tool command
+      run: dotnet tool install -g dotnet-ver
+
+    - name: Bump version
+      id: bump
+      run: echo "NEW_VERSION=$(dotnet ver --plain)" >> $GITHUB_ENV
+
+    - name: Commit and push if changes
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git diff --quiet || (git commit -am "Bump version to $NEW_VERSION" && git push)
