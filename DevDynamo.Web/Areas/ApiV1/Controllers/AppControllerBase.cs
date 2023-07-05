@@ -8,6 +8,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
     public abstract class AppControllerBase : ControllerBase
     {
+        [ApiExplorerSettings(IgnoreApi = true)]
         public NotFoundObjectResult AppNotFound(string objnName, object? keyThatNotFound = null, string message = "")
         {
             //  var ss = keyThatNotFound != null ? $" [{keyThatNotFound}] " : " ";
