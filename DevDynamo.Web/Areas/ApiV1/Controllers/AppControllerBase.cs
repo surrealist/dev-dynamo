@@ -5,16 +5,16 @@ using System.Net;
 
 namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
-
+    
     public abstract class AppControllerBase : ControllerBase
     {
         [ApiExplorerSettings(IgnoreApi = true)]
-        public NotFoundObjectResult AppNotFound(string objnName, object? keyThatNotFound = null, string message = "")
+        public NotFoundObjectResult AppNotFound(string objectName, object? keyThatNotFound = null, string message = "")
         {
             //  var ss = keyThatNotFound != null ? $" [{keyThatNotFound}] " : " ";
             //  var s = $"{objnName}{ss} was not found.";
 
-            var s = $"{objnName} was not found.";
+            var s = $"{objectName} was not found.";
 
             if (keyThatNotFound != null)
                 s += $" [{keyThatNotFound}]";
@@ -27,12 +27,5 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             };
             return base.NotFound(obj);
         }
-
-
-        public override BadRequestResult BadRequest()
-        {
-            return base.BadRequest();
-        }
-
     }
 }

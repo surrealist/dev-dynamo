@@ -7,18 +7,26 @@ using System.Threading.Tasks;
 
 namespace DevDynamo.Models
 {
-  public class Ticket
-  {
-    public Ticket() { }
+    public class Ticket
+    {
+        public Ticket(string title, string status)
+        {
+            Title = title;
+            Status = status;
+            //ProjectId = projectId;
+        }
 
-    public int Id { get; set; }
+        public int Id { get; set; }
 
-    [StringLength(100)]
-    public string Title { get; set; } = null!;
+        [Required]
+        public Guid ProjectId { get; set; }
 
-    public string? Description { get; set; }
+        [StringLength(100)]
+        public string Title { get; set; } = null!;
 
-    [StringLength(50)]
-    public string Status { get; set; } = null!;
-  }
+        public string? Description { get; set; }
+
+        [StringLength(50)]
+        public string Status { get; set; } = null!;
+    }
 }
