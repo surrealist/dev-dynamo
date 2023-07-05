@@ -13,14 +13,20 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
         [HttpGet]
         public ActionResult<SystemResponse> GetVersionSystem()
         {
-            // var items = db.Projects.ToList();
-             var v = GetType().Assembly.GetName().Version.ToString();
+            
+            var v = GetType().Assembly.GetName().Version.ToString();
+            DateTime utcTime = DateTime.UtcNow;
+            string localTime = utcTime.ToLocalTime().ToString("zzz");
+            string now = utcTime.ToString($"yyyy-MM-dd HH:mm:ss{localTime}");
 
-             return  new SystemResponse {  
-                version = v, environment = "", now = ""
-             };
+            return new SystemResponse
+            {
+                version = v,
+                environment = "",
+                now = now
+            };
         }
 
-      
+
     }
 }
