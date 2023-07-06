@@ -1,3 +1,4 @@
+using Castle.Core.Internal;
 using DevDynamo.Models;
 using DevDynamo.Web.Areas.ApiV1.Models;
 using DevDynamo.Web.Data;
@@ -30,8 +31,9 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
             string utcTime = DateTime.UtcNow.ToString($"yyyy-MM-dd HH:mmzzz");
             string localTime = DateTime.Now.ToString($"yyyy-MM-dd HH:mmzzz");
-           
-             var version = GetType().Assembly.GetName().Version.ToString();
+
+            Version? systemVersion = GetType().Assembly.GetName().Version;
+            string? version = systemVersion != null ? systemVersion.ToString() : null;
             var envi = _env.EnvironmentName.ToString(); 
 
             return new SystemResponse
