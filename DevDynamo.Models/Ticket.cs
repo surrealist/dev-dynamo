@@ -13,9 +13,13 @@ namespace DevDynamo.Models
         {
             Title = title;
             Status = status;
+            //ProjectId = projectId;
         }
 
         public int Id { get; set; }
+
+        [Required]
+        public Guid ProjectId { get; set; }
 
         [StringLength(100)]
         public string Title { get; set; } = null!;
