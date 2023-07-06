@@ -11,21 +11,34 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
     [ApiController]
     public class SystemController : AppControllerBase
     {
+
+        private readonly IWebHostEnvironment _env;
+        public SystemController(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
+
         [HttpGet]
         public ActionResult<SystemResponse> GetVersionSystem()
         {
-         
-            var v = GetType().Assembly.GetName().Version.ToString();
-            var envi = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            DateTime utcTime = DateTime.UtcNow;
-            string localTime = utcTime.ToLocalTime().ToString("zzz");
-            string now = utcTime.ToString($"yyyy-MM-dd HH:mm:ss{localTime}");
+
+            //DateTime now = DateTime.Now;
+            //string timeZone = TimeZoneInfo.Local.DisplayName;
+            //TimeZoneInfo timeZoneInfo = TimeZoneInfo.Local;
+            //DateTime utcTime1 = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now, timeZoneInfo);
+            //string localTime1 = utcTime1.ToString($"yyyy-MM-dd HH:mmzzz");
+
+            string utcTime = DateTime.UtcNow.ToString($"yyyy-MM-dd HH:mmzzz");
+            string localTime = DateTime.Now.ToString($"yyyy-MM-dd HH:mmzzz");
+           
+             var version = GetType().Assembly.GetName().Version.ToString();
+            var envi = _env.EnvironmentName.ToString(); 
 
             return new SystemResponse
             {
-                version = v,
-                environment = envi,
-                now = now
+                Version = version,
+                Environment = envi,
+                Now = utcTime
             };
         }
 

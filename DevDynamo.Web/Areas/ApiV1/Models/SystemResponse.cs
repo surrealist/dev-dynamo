@@ -5,9 +5,9 @@ namespace DevDynamo.Web.Areas.ApiV1.Models
 {
   public class SystemResponse
   {
-    public string? version { get; set; }
-    public string? environment { get; set; }
-    public string? now { get; set; }
+    public string? Version { get; set; }
+    public string? Environment { get; set; }
+    public string? Now { get; set; }
 
   }
 }
