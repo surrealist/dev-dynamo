@@ -8,6 +8,10 @@ on:
     branches:
       - develop
   workflow_dispatch:
+  workflow_run:
+      workflows: ["bump_version"]
+      types:
+        - completed
 
 jobs:
   build:
@@ -38,7 +42,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -52,6 +56,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'sit-dev-dynamo'
-          slot-name: 'Production'
+          slot-name: 'Development'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_60B86791586843B2B23B05D52B064684 }}
           package: .
