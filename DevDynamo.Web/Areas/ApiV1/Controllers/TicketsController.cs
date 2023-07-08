@@ -40,7 +40,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
                 return AppNotFound(nameof(Ticket), request.ProjectId);
             }
 
-            //Initial Status
+            // Initial Status
             var workflow = project.WorkflowSteps.SingleOrDefault(x => x.FromStatus == "[*]");
             if (workflow is null)
             {
@@ -94,7 +94,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             return workFlowsSteps;
         }
 
-        //PUT /api/v1/tickets/{ticket_id}/status/{target_status_name}
+        // PUT /api/v1/tickets/{ticket_id}/status/{target_status_name}
         [HttpPut("{ticket_id}/status/{target_status_name}")]
         public ActionResult<TicketResponse> ChangeTicketStatus(int ticket_id, string target_status_name)
         {
@@ -134,7 +134,6 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             {
                 return BadRequest(new ProblemDetails() { Title = "Error updating data" + ex.Message });
             }
-
         }
     }
 }
