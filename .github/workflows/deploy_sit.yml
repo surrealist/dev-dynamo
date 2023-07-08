@@ -1,17 +1,35 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
+# sit-dev-dynamo.azurewebsites.net
 
-name: Build and deploy ASP.Net Core app to Azure Web App - sit-dev-dynamo
+name: Deploy SIT
 
 on:
   workflow_run:
-    workflows: ["bump_version"]
+    workflows: [Bump Version on Develop]
     types:
       - completed
     status: ["success"]
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      last_commit_message: ${{ steps.check.outputs.last_commit_message }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GH_PAT }}
+
+    - name: Get last commit message
+      id: check
+      run: |
+        echo "::set-output name=last_commit_message::$(git log -1 --pretty=%B)"
+    
+
   build:
+    needs: check
+    if: ${{ startsWith(needs.check.outputs.last_commit_message, 'Bump version to') }}
     runs-on: windows-latest
 
     steps:
