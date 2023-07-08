@@ -1,7 +1,7 @@
 ﻿using DevDynamo.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevDynamo.Web.Data
+namespace DevDynamo.Services.Data
 {
   public class AppDb : DbContext
   {
