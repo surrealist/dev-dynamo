@@ -4,14 +4,11 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - sit-dev-dynamo
 
 on:
-  push:
-    branches:
-      - develop
-  workflow_dispatch:
   workflow_run:
-      workflows: ["bump_version"]
-      types:
-        - completed
+    workflows: ["bump_version"]
+    types:
+      - completed
+    status: ["success"]
 
 jobs:
   build:
