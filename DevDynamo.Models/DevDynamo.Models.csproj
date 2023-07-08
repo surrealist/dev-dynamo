@@ -5,10 +5,10 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <DocumentationFile></DocumentationFile>
-    <Version>0.1.35</Version>
-    <FileVersion>0.1.35</FileVersion>
-    <AssemblyVersion>0.1.35</AssemblyVersion>
-    <PackageVersion>0.1.35</PackageVersion>
-    <InformationVersion>0.1.35</InformationVersion>
+    <Version>0.1.36</Version>
+    <FileVersion>0.1.36</FileVersion>
+    <AssemblyVersion>0.1.36</AssemblyVersion>
+    <PackageVersion>0.1.36</PackageVersion>
+    <InformationVersion>0.1.36</InformationVersion>
   </PropertyGroup>
 </Project>
