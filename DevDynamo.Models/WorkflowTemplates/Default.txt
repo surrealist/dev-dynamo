@@ -1,9 +1,0 @@
-﻿stateDiagram
-    [*] --> ToDo : Create Ticket
-    ToDo --> Doing : Developer Starts
-    Doing --> ReadyToTest : Developer Finishes
-    Doing --> ToDo : Reset
-    ReadyToTest --> Done : Test Passed
-    ReadyToTest --> Reopen : Test Failed
-    Reopen --> Doing : Developer Reopens
-    Done --> [*] : Close Ticket
