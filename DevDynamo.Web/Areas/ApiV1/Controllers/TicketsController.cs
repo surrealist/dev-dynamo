@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using static DevDynamo.Web.Areas.ApiV1.Models.TicketResponse;
 using Microsoft.CodeAnalysis.Operations;
 using Newtonsoft.Json;
+using DevDynamo.Services;
 
 namespace DevDynamo.Web.Areas.ApiV1.Controllers
 {
@@ -13,28 +14,28 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
     [ApiController]
     public class TicketsController : AppControllerBase
     {
-        private readonly AppDb db;
-        public TicketsController(AppDb db)
+        private readonly App app;
+        public TicketsController(App app)
         {
-            this.db = db;
+            this.app = app;
         }
 
         [HttpGet("{id}")]
         public ActionResult<TicketResponse> GetById(int id)
         {
-            var item = db.Tickets.SingleOrDefault(x => x.Id == id);
+            var item = app.Tickets.Find(id);
             if (item is null)
             {
                 return AppNotFound(nameof(Ticket), id);
             }
-            
+
             return TicketResponse.FromModel(item);
         }
 
         [HttpPost]
         public ActionResult<TicketResponse> Create(CreateTicketRequest request)
         {
-            var project = db.Projects.SingleOrDefault(x => x.Id == request.ProjectId);
+            var project = app.Projects.Find(request.ProjectId);
             if (project is null)
             {
                 return AppNotFound(nameof(Ticket), request.ProjectId);
@@ -49,8 +50,8 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
             var t = new Ticket(request.Title, workflow.ToStatus);
             project.Tickets.Add(t);
-            
-            db.SaveChanges();
+
+            app.SaveChanges();
 
             var res = TicketResponse.FromModel(t);
             return CreatedAtAction(nameof(GetById), new { id = t.Id }, res);
@@ -59,7 +60,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
         [HttpPut("{id}")]
         public ActionResult<TicketResponse> UpdateInfo(int id, UpdateTicketRequest request)
         {
-            var ticket = db.Tickets.SingleOrDefault(x => x.Id == id);
+            var ticket = app.Tickets.Find(id);
             if (ticket is null)
             {
                 return AppNotFound(nameof(Ticket), id);
@@ -68,22 +69,24 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             ticket.Title = request.Title;
             ticket.Description = request.Description;
 
-            db.Tickets.Update(ticket);
-            db.SaveChanges();
+            app.Tickets.Update(ticket);
+            app.SaveChanges();
 
             return NoContent();
         }
 
         [HttpGet("{ticket_id}/next-status")]
-        public ActionResult<List<TicketNextStatusResponse>> GetAvailableNextTicketStatus(int ticket_id)
+        public ActionResult<List<TicketNextStatusResponse>> GetAvailableNextTicketStatus(int ticketId)
         {
-            var ticket = db.Tickets.FirstOrDefault(x => x.Id == ticket_id);
+            var ticket = app.Tickets.Find(ticketId);
             if (ticket == null)
             {
-                return AppNotFound($"Ticket is not found {ticket_id}");
+                return AppNotFound("Ticket", ticketId);
             }
 
-            var workFlowsSteps = db.WorkflowSteps.Where(x => x.ProjectId == ticket.ProjectId && x.FromStatus == ticket.Status).
+            var workFlowsSteps = app.WorkflowSteps
+                .All().Where(x => x.ProjectId == ticket.ProjectId
+                                    && x.FromStatus == ticket.Status).
                                  Select(x => new TicketNextStatusResponse { Action = x.Action, NextStatus = x.ToStatus }).ToList();
 
             if (!workFlowsSteps.Any())
@@ -102,15 +105,22 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             {
                 if (target_status_name == "") throw new InvalidOperationException("Status not found.");
 
-                var item = db.Tickets.Find(ticket_id);
+                var item = app.Tickets.Find(ticket_id);
                 if (item is null)
                 {
                     return NotFound(new ProblemDetails() { Title = $"Ticket with Id = {ticket_id} not found" });
                 }
 
 
-                var ItemNextSteps = db.WorkflowSteps.Where(x => x.ProjectId.ToString() == item.ProjectId.ToString() && x.FromStatus == item.Status).
-                              Select(x => new TicketStatusResponse { ToStatus = x.ToStatus, Action = x.Action }).ToList();
+                var ItemNextSteps = app.WorkflowSteps.All()
+                    .Where(x => x.ProjectId.ToString() == item.ProjectId.ToString()
+                                && x.FromStatus == item.Status)
+                    .Select(x => new TicketStatusResponse
+                    {
+                        ToStatus = x.ToStatus,
+                        Action = x.Action
+                    })
+                    .ToList();
 
                 if (!ItemNextSteps.Any())
                 {
@@ -124,8 +134,8 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
                 item.Status = target_status_name;
 
-                db.Tickets.Update(item);
-                db.SaveChanges();
+                app.Tickets.Update(item);
+                app.SaveChanges();
 
                 //var res = TicketResponse.FromModel(item);
                 return NoContent();

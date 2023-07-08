@@ -5,15 +5,10 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <DocumentationFile></DocumentationFile>
-    <Version>0.1.33</Version>
-    <FileVersion>0.1.33</FileVersion>
-    <AssemblyVersion>0.1.33</AssemblyVersion>
-    <PackageVersion>0.1.33</PackageVersion>
-    <InformationVersion>0.1.33</InformationVersion>
+    <Version>0.1.35</Version>
+    <FileVersion>0.1.35</FileVersion>
+    <AssemblyVersion>0.1.35</AssemblyVersion>
+    <PackageVersion>0.1.35</PackageVersion>
+    <InformationVersion>0.1.35</InformationVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <None Update="WorkflowTemplates\Default.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 using DevDynamo.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using DevDynamo.Services.Data;
+using DevDynamo.Services;
 
 namespace DevDynamo.Web
 {
@@ -32,6 +34,9 @@ namespace DevDynamo.Web
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScoped<App>();           
+            
 
             var app = builder.Build();
 
