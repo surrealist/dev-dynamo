@@ -22,25 +22,17 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
         [HttpGet]
         public ActionResult<SystemResponse> GetVersionSystem()
         {
-
-            //DateTime now = DateTime.Now;
-            //string timeZone = TimeZoneInfo.Local.DisplayName;
-            //TimeZoneInfo timeZoneInfo = TimeZoneInfo.Local;
-            //DateTime utcTime1 = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now, timeZoneInfo);
-            //string localTime1 = utcTime1.ToString($"yyyy-MM-dd HH:mmzzz");
-
-            string utcTime = DateTime.UtcNow.ToString($"yyyy-MM-dd HH:mmzzz");
             string localTime = DateTime.Now.ToString($"yyyy-MM-dd HH:mmzzz");
 
             Version? systemVersion = GetType().Assembly.GetName().Version;
             string? version = systemVersion != null ? systemVersion.ToString() : null;
-            var envi = _env.EnvironmentName.ToString(); 
+            var envi = _env.EnvironmentName; 
 
             return new SystemResponse
             {
                 Version = version,
                 Environment = envi,
-                Now = utcTime
+                Now = localTime
             };
         }
 
