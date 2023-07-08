@@ -19,13 +19,6 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             this.db = db;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<TicketResponse>> GetAll()
-        {
-            var items = db.Tickets.ToList();
-            return items.ConvertAll(x => TicketResponse.FromModel(x));
-        }
-
         [HttpGet("{id}")]
         public ActionResult<TicketResponse> GetById(int id)
         {

@@ -4,11 +4,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-DevDynamo.Web-6f49e707-94ff-49b6-a5c3-d1de04fd910b</UserSecretsId>
-    <Version>0.1.21</Version>
-    <FileVersion>0.1.21</FileVersion>
-    <AssemblyVersion>0.1.21</AssemblyVersion>
-    <PackageVersion>0.1.21</PackageVersion>
-    <InformationVersion>0.1.21</InformationVersion>
+    <Version>0.1.30</Version>
+    <FileVersion>0.1.30</FileVersion>
+    <AssemblyVersion>0.1.30</AssemblyVersion>
+    <PackageVersion>0.1.30</PackageVersion>
+    <InformationVersion>0.1.30</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Areas\ApiV1\Models\ProjectReponse.cs" />

@@ -9,7 +9,9 @@ namespace DevDynamo.Web.Areas.ApiV1.Models
         public string Title { get; set; } = null!;
         public string? Description { get; set; }
         public string Status { get; set; } = null!;
-       
+
+        public Guid ProjectId { get; set; }
+
         public static TicketResponse FromModel(Ticket t)
         {
             return new TicketResponse
@@ -17,7 +19,8 @@ namespace DevDynamo.Web.Areas.ApiV1.Models
                 Id = t.Id,
                 Title = t.Title,
                 Status = t.Status,
-                Description = t.Description
+                Description = t.Description,
+                ProjectId = t.ProjectId
             };
 
         }
