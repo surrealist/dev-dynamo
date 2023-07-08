@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DevDynamo.Models\DevDynamo.Models.csproj" />
+    <ProjectReference Include="..\DevDynamo.Services\DevDynamo.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="WorkflowTemplates\Default.txt">

@@ -1,4 +1,5 @@
 ﻿using DevDynamo.Models;
+using DevDynamo.Services;
 using DevDynamo.Web.Areas.ApiV1.Models;
 using DevDynamo.Web.Data;
 using Microsoft.AspNetCore.Http;
@@ -10,35 +11,34 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
     [ApiController]
     public class ProjectsController : AppControllerBase
     {
-        private readonly AppDb db;
+        private readonly App app;
 
-        public ProjectsController(AppDb db)
+        public ProjectsController(App app)
         {
-            this.db = db;
+            this.app = app;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<ProjectResponse>> GetAll()
         {
-            var items = db.Projects.ToList();
+            var items = app.Projects.All().ToList();
             return items.ConvertAll(x => ProjectResponse.FromModel(x));
         }
 
         [HttpGet("{project_id}/tickets")]
         public ActionResult<IEnumerable<TicketResponse>> GetTicketsByProject(Guid project_id)
         {
-            var items = db.Tickets.Where(x => x.ProjectId == project_id).ToList();
+            var items = app.Tickets.Where(x => x.ProjectId == project_id).ToList();
             return items.ConvertAll(x => TicketResponse.FromModel(x));
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ProjectResponse> GetById(Guid id)
+        public async Task<ActionResult<ProjectResponse>> GetByIdAsync(Guid id)
         {
-            var item = db.Projects.SingleOrDefault(x => x.Id == id);
+            var item = await app.Projects.FindAsync(id);
             if (item is null)
             {
-                //return NotFound("Project not found");
-                return AppNotFound(nameof(Project), id); //NotFound(new ProblemDetails() { Title = "Project is not found" });
+                return AppNotFound(nameof(Project), id);
             }
             return ProjectResponse.FromModel(item);
         }
@@ -52,7 +52,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             if (!System.IO.File.Exists(path))
             {
                 String[] fileNames = Directory.GetFiles(@"./WorkflowTemplates", "*.txt").Select(fileName => Path.GetFileNameWithoutExtension(fileName)).ToArray();
-                string errorMessage = null! ;
+                string errorMessage = null!;
 
                 if (!fileNames.Any()) // Folder ./WorkflowTemplates no any file.
                 {
@@ -73,11 +73,11 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
             p.TemplateName = request.Template;
 
-            db.Projects.Add(p);
-            db.SaveChanges();
+            app.Projects.Add(p);
+            app.SaveChanges();
 
             var res = ProjectResponse.FromModel(p);
-            return CreatedAtAction(nameof(GetById), new { id = p.Id }, res);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = p.Id }, res);
         }
 
 
@@ -88,14 +88,14 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             if (string.IsNullOrEmpty(request.Name)) return BadRequest(new UpdateProjectRequest { Name = $"cannot null or empty" });
             if (string.IsNullOrEmpty(request.Description)) return BadRequest(new UpdateProjectRequest { Description = $"cannot null or empty" });
 
-            var checkData = db.Projects.SingleOrDefault(x => x.Id == id);
+            var checkData = app.Projects.Find(id);
 
             if (checkData == null) return BadRequest(new UpdateProjectRequest { Description = $"cannot find Id => {id} " });
 
             checkData.Name = request.Name;
             checkData.Description = request.Description;
 
-            db.SaveChanges();
+            app.SaveChanges();
 
             return NoContent();
         }
