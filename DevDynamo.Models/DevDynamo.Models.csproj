@@ -11,9 +11,4 @@
     <PackageVersion>0.1.33</PackageVersion>
     <InformationVersion>0.1.33</InformationVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <None Update="WorkflowTemplates\Default.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>
