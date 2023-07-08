@@ -79,11 +79,11 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             var ticket = db.Tickets.FirstOrDefault(x => x.Id == ticket_id);
             if (ticket == null)
             {
-                return AppNotFound($"Ticket is not found");
+                return AppNotFound($"Ticket is not found {ticket_id}");
             }
 
             var workFlowsSteps = db.WorkflowSteps.Where(x => x.ProjectId == ticket.ProjectId && x.FromStatus == ticket.Status).
-                                 Select(x => new TicketNextStatusResponse { ToStatus = x.ToStatus, Action = x.Action }).ToList();
+                                 Select(x => new TicketNextStatusResponse { Action = x.Action, NextStatus = x.ToStatus }).ToList();
 
             if (!workFlowsSteps.Any())
             {
