@@ -3,11 +3,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.1.42</Version>
-    <FileVersion>0.1.42</FileVersion>
-    <AssemblyVersion>0.1.42</AssemblyVersion>
-    <PackageVersion>0.1.42</PackageVersion>
-    <InformationVersion>0.1.42</InformationVersion>
+    <Version>0.1.43</Version>
+    <FileVersion>0.1.43</FileVersion>
+    <AssemblyVersion>0.1.43</AssemblyVersion>
+    <PackageVersion>0.1.43</PackageVersion>
+    <InformationVersion>0.1.43</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.18" />
