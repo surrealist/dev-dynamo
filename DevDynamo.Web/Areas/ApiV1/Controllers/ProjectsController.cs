@@ -46,8 +46,6 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
         [HttpPost]
         public ActionResult<ProjectResponse> Create(CreateProjectRequest request)
         {
-            var p = new Project(request.Name);
-
             var path = $"./WorkflowTemplates/{request.Template}.txt";
             if (!System.IO.File.Exists(path))
             {
@@ -69,12 +67,8 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
             }
 
             var workflow = System.IO.File.ReadAllText(path);
-            p.LoadWorkflowTemplate(workflow);
 
-            p.TemplateName = request.Template;
-
-            app.Projects.Add(p);
-            app.SaveChanges();
+            var p = app.Projects.Create(request.Name, request.Template, workflow);
 
             var res = ProjectResponse.FromModel(p);
             return CreatedAtAction(nameof(GetByIdAsync), new { id = p.Id }, res);
@@ -82,20 +76,22 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
 
 
         [HttpPut("{id}")]
-        public ActionResult<ProjectResponse> Update(Guid id, UpdateProjectRequest request)
+        public async Task<ActionResult<ProjectResponse>> UpdateAsync(Guid id, UpdateProjectRequest request)
         {
 
             if (string.IsNullOrEmpty(request.Name)) return BadRequest(new UpdateProjectRequest { Name = $"cannot null or empty" });
             if (string.IsNullOrEmpty(request.Description)) return BadRequest(new UpdateProjectRequest { Description = $"cannot null or empty" });
 
-            var checkData = app.Projects.Find(id);
+            //var checkData = app.Projects.Find(id);
 
-            if (checkData == null) return BadRequest(new UpdateProjectRequest { Description = $"cannot find Id => {id} " });
+            //if (checkData == null) return BadRequest(new UpdateProjectRequest { Description = $"cannot find Id => {id} " });
 
-            checkData.Name = request.Name;
-            checkData.Description = request.Description;
+            //checkData.Name = request.Name;
+            //checkData.Description = request.Description;
 
-            app.SaveChanges();
+            //app.SaveChanges();
+
+            await app.Projects.UpdateAsync(id, request.Name, request.Description);
 
             return NoContent();
         }
