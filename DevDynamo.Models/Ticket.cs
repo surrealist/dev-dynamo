@@ -15,15 +15,14 @@ namespace DevDynamo.Models
             Status = status;
             //ProjectId = projectId;
         }
-
+        public Ticket() { }
+        public Guid ProjectId { get; set; }
         public int Id { get; set; }
 
         [StringLength(100)]
         public string Title { get; set; } = null!;
 
         public string? Description { get; set; }
-
-        public Guid ProjectId { get; set; }
 
         [StringLength(50)]
         public string Status { get; set; } = null!;
