@@ -96,6 +96,7 @@ namespace DevDynamo.Web.Areas.ApiV1.Controllers
                     return NotFound(new ProblemDetails() { Title = $"Ticket with Id = {ticket_id} not found" });
                 }
 
+
                 var ItemNextSteps = db.WorkflowSteps.Where(x => x.ProjectId.ToString() == item.ProjectId.ToString() && x.FromStatus == item.Status).
                               Select(x => new TicketStatusResponse { ToStatus = x.ToStatus, Action = x.Action }).ToList();
 
