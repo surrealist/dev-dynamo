@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DevDynamo.Services.Data;
 using DevDynamo.Services;
+using DevDynamo.Web.Middlewares;
 
 namespace DevDynamo.Web
 {
@@ -56,6 +57,8 @@ namespace DevDynamo.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseMiddleware<LoggingMiddleware>();
 
             app.UseRouting();
 
